@@ -5,7 +5,6 @@ import Bands from "@/components/Bands";
 import Hyperlinks from "@/components/Hyperlinks";
 import { WarpBackground } from "@/components/magicui/warp-background";
 import { ProjectBentoGrid } from "@/components/Projects";
-import { TextHoverEffect } from "@/components/ui/text-hover-effect";
 
 export default function Home() {
   return (

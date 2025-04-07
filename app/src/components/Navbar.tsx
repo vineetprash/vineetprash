@@ -1,6 +1,6 @@
 "use client";
-import React, { useState } from "react";
-import { Menu, MenuItem } from "./ui/navbar-menu";
+import React from "react";
+import { Menu } from "./ui/navbar-menu";
 import { cn } from "@/lib/utils";
 
 export function NavbarDemo() {
@@ -8,7 +8,6 @@ export function NavbarDemo() {
 }
 
 function Navbar({ className }: { className?: string }) {
-  const [active, setActive] = useState<string | null>(null);
   return (
     <div
       className={cn(
@@ -16,7 +15,7 @@ function Navbar({ className }: { className?: string }) {
         className
       )}
     >
-      <Menu setActive={setActive}>
+      <Menu setActive={() => {}}>
         <a href="#about" className=" scroll-smooth">
           About
         </a>
