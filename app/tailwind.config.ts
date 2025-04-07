@@ -1,6 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 import type { Config } from "tailwindcss";
-import { default as flattenColorPalette } from "tailwindcss/lib/util/flattenColorPalette";
+function flattenColorPalette(
+  colors: Record<string, any>,
+  target: Record<string, string> = {},
+  prefix = ""
+): Record<string, string> {
+  for (const [key, value] of Object.entries(colors)) {
+    if (typeof value === "string") {
+      target[`${prefix}${key}`] = value;
+    } else if (typeof value === "object" && value !== null) {
+      flattenColorPalette(value, target, `${prefix}${key}-`);
+    }
+  }
+  return target;
+}
 
 const config = {
   darkMode: ["class"],
