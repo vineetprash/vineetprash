@@ -1,39 +1,19 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 // import { FloatingNav } from "@/components/ui/floating-navbar";
 import { NavbarDemo } from "@/components/Navbar";
+import { Poppins } from "next/font/google";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+const poppins = Poppins({
+  subsets: ["latin"], // Specify subsets
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], // Define weights
+  display: "swap", // Optimize font rendering
+  variable: "--font-poppins", // Define a CSS variable for the font
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
-
 export const metadata: Metadata = {
   title: "Portfolio",
   description: "Vineet Prashant",
 };
-
-// const navItems = [
-//   {
-//     name: "About",
-//     link: "#",
-//   },
-//   {
-//     name: "Projects",
-//     link: "#",
-//   },
-//   {
-//     name: "Contact Me",
-//     link: "#",
-//   },
-// ];
 
 export default function RootLayout({
   children,
@@ -41,10 +21,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased dark scroll-smooth`}
-      >
+    <html lang="en" className={`scroll-smooth ${poppins.variable}`}>
+      <body className={`antialiased dark scroll-smooth`}>
         <NavbarDemo />
         {children}
       </body>

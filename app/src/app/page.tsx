@@ -8,11 +8,7 @@ import { ProjectBentoGrid } from "@/components/Projects";
 
 export default function Home() {
   return (
-    <div className="bg-gradient-to-b from-black via-[#323f65] to-[#36539e] min-h-screen w-full relative overflow-x-hidden">
-      {/* <div className="absolute bg-black bottom-0 blur-[100px] rounded-full aspect-square w-96" /> */}
-      {/* <div className="absolute bg-pink-500 blur-[200px] rounded-full aspect-square w-44" />
-      <div className="absolute bg-blue-500 blur-[200px] rounded-full aspect-square w-44" /> */}
-      {/* <div className="absolute right-0 bg-yellow-500 blur-[200px] rounded-full aspect-square w-44" /> */}
+    <div className="bg-gradient-to-b from-black via-[#456990] to-[#191919] min-h-screen w-full relative overflow-x-hidden">
       {/* Hero Section */}
       <section
         className="relative h-screen overflow-hidden flex flex-col justify-end"
@@ -57,7 +53,7 @@ export default function Home() {
         <ProjectBentoGrid />
       </section>
       {/* Reverse Bands */}
-      {/* <Bands count={10} reverse /> */}
+      <Bands count={10} reverse />
       {/* Contact Section
       <section className="relative z-10 px-6 md:px-24">
         <ContactMe />

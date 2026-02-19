@@ -4,7 +4,7 @@ import type { Config } from "tailwindcss";
 function flattenColorPalette(
   colors: Record<string, any>,
   target: Record<string, string> = {},
-  prefix = ""
+  prefix = "",
 ): Record<string, string> {
   for (const [key, value] of Object.entries(colors)) {
     if (typeof value === "string") {
@@ -38,6 +38,11 @@ const config = {
       serif: ["Merriweather", "ui-serif", "Georgia"],
     },
     extend: {
+      fontFamily: {
+        // sans: ["var(--font-sans)"],
+        sans: ["var(--font-poppins)", "ui-sans-serif", "system-ui"],
+      },
+
       boxShadow: {
         custom:
           "1px 1px 8px #000, -1px -1px 8px #6f6f6f, inset 1px 1px 8px #536297, inset -1px -1px 8px #536297",
@@ -106,7 +111,7 @@ export default config;
 function addVariablesForColors({ addBase, theme }: any) {
   const allColors = flattenColorPalette(theme("colors"));
   const newVars = Object.fromEntries(
-    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val]),
   );
 
   addBase({
