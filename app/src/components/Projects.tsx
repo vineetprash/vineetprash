@@ -20,7 +20,7 @@ const projects = [
     github: "https://github.com/vineetprash/morphcode",
   },
   {
-    title: "Mentor Connect",
+    title: "Mentor-Connect",
     description:
       "Built a 1:1 mentorship platform for Smart India Hackathon 2024. Achieved 2nd place in internal rounds.",
     image: "/projects/mentorconnect.jpg",
