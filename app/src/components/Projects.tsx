@@ -8,12 +8,13 @@ const projects = [
       "A dx-friendly, minimalist, multithreaded Java HTTP Library packaged with its own HTTP Server.",
     tech: "Java, TCP Sockets, OOP and Modular Package Design",
     image: "/projects/firefly.jpg",
+    link: "https://firefly-java.vercel.app",
     github: "https://github.com/vineetprash/firefly",
   },
   {
     title: "Morphcode",
     description:
-      "An online code-compiler platform powered by docker, supporting multiple languages. Built for fun and learning.",
+      "An online code-compiler platform powered by docker, supporting multiple languages. ",
     tech: "Springboot, Webflux, Docker, React",
     image: "/projects/morphcode.jpg",
     github: "https://github.com/vineetprash/morphcode",
@@ -55,7 +56,7 @@ const projects = [
 export function ProjectBentoGrid() {
   return (
     <section
-      className="w-full py-16 bg-neutral-950 min-h-screen px-4"
+      className="w-full py-16 bg-[rgb(15,13,11)] min-h-screen px-4"
       id="projects"
     >
       <h2 className="text-center text-4xl font-semibold tracking-tight text-neutral-100 mb-12">
@@ -67,26 +68,29 @@ export function ProjectBentoGrid() {
           <BentoGridItem
             key={i}
             className={`relative group cursor-pointer overflow-hidden rounded-2xl 
-            shadow-md transition-transform duration-300 hover:scale-[1.02]
+            shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]
             bg-neutral-900 border border-neutral-800
             ${i === 6 || i === 5 || i === 1 ? "sm:col-span-2" : ""} ${
               i === 0 ? "sm:row-span-2" : ""
             }`}
-            onClick={() => window.open(proj.github || proj.link, "_blank")}
+            onClick={() => window.open(proj.link || proj.github, "_blank")}
             header={
               <>
-                <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                {/* Background Image - visible on mobile by default, blur on desktop hover */}
+                <div className="absolute inset-0 z-0 opacity-30 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-500">
                   <Image
                     src={proj.image}
                     alt={proj.title}
                     fill
-                    className="object-cover scale-105 group-hover:blur-sm transition duration-700"
+                    className="object-cover scale-105 sm:group-hover:blur-sm transition duration-700"
                   />
                 </div>
 
+                {/* Gradient Overlay */}
                 <div
                   className="absolute inset-0 z-0 
-                  bg-gradient-to-b from-black/90 via-black/80 to-transparent 
+                  bg-gradient-to-b from-black/95 via-black/85 to-black/70
+                  sm:from-black/90 sm:via-black/80 sm:to-transparent 
                   opacity-90 group-hover:opacity-100 transition duration-500"
                 />
               </>
@@ -108,16 +112,21 @@ export function ProjectBentoGrid() {
                   </p>
                 )}
 
-                {proj.github ? (
-                  <p className="text-xs text-neutral-400 underline underline-offset-4 hover:text-neutral-200 transition-colors">
-                    GitHub →
+                {proj.github && (
+                  <p
+                    onClick={() => window.open(proj.github, "_blank")}
+                    className="text-xs text-neutral-400 underline underline-offset-4 hover:text-neutral-200 transition-colors"
+                  >
+                    GitHub -&gt;
                   </p>
-                ) : (
-                  proj.link && (
-                    <p className="text-xs text-neutral-400 underline underline-offset-4 hover:text-neutral-200 transition-colors">
-                      Website →
-                    </p>
-                  )
+                )}
+                {proj.link && (
+                  <p
+                    onClick={() => window.open(proj.link, "_blank")}
+                    className="text-xs text-neutral-400 underline underline-offset-4 hover:text-neutral-200 transition-colors"
+                  >
+                    Website -&gt;
+                  </p>
                 )}
               </div>
             }

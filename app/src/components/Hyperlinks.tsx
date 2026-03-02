@@ -7,7 +7,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 function Hyperlinks({ className }: { className?: string }) {
   return (
-    <div className={cn("flex gap-2 m-2 px-4 py-2", className)}>
+    <div className={cn("flex gap-2 m-2 py-2", className)}>
       <a
         className="cursor-pointer"
         href="https://github.com/vineetprash"

@@ -2,7 +2,13 @@
 
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
-import React, { HTMLAttributes, useCallback, useMemo } from "react";
+import React, {
+  HTMLAttributes,
+  useCallback,
+  useMemo,
+  useState,
+  useEffect,
+} from "react";
 
 interface WarpBackgroundProps extends HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -14,6 +20,12 @@ interface WarpBackgroundProps extends HTMLAttributes<HTMLDivElement> {
   beamDuration?: number;
   gridColor?: string;
 }
+
+const RANDOM_SENTENCES = [
+  "hello there abcdefghijklmnopqrstuvwxyz",
+  "keep exploring",
+];
+
 const Beam = ({
   width,
   x,
@@ -44,24 +56,63 @@ const Beam = ({
         duration,
         delay,
         repeat: Infinity,
-        ease: "linear",
+        ease: "circInOut",
       }}
     />
   );
 };
+
+// const TextBeam = ({
+//   x,
+//   delay,
+//   duration,
+//   text,
+// }: {
+//   x: string | number;
+//   delay: number;
+//   duration: number;
+//   text: string;
+// }) => {
+//   return (
+//     <motion.div
+//       style={
+//         {
+//           "--x": `${x}`,
+//         } as React.CSSProperties
+//       }
+//       className="absolute left-[var(--x)] top-0 text-white/60 text-xs font-mono whitespace-nowrap"
+//       initial={{ y: "100cqmax", x: "-50%", rotateY: 90 }}
+//       animate={{ y: "-100%", x: "-50%", rotateY: 90 }}
+//       transition={{
+//         duration,
+//         delay,
+//         repeat: Infinity,
+//         ease: "circInOut",
+//       }}
+//     >
+//       {text}
+//     </motion.div>
+//   );
+// };
 
 export const WarpBackground: React.FC<WarpBackgroundProps> = ({
   children,
   perspective = 100,
   className,
   beamsPerSide = 3,
-  beamSize = 5,
+  beamSize = 1,
   beamDelayMax = 3,
   beamDelayMin = 0,
   beamDuration = 3,
-  gridColor = "hsl(var(--border))",
+  gridColor = "transparent",
   ...props
 }) => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const generateBeams = useCallback(() => {
     const beams = [];
     const cellsPerSide = Math.floor(100 / beamSize);
@@ -71,10 +122,17 @@ export const WarpBackground: React.FC<WarpBackgroundProps> = ({
       const x = Math.floor(i * step);
       const delay =
         Math.random() * (beamDelayMax - beamDelayMin) + beamDelayMin;
-      beams.push({ x, delay });
+
+      // 10% chance to be a text beam instead of regular beam (only after mount)
+      const isTextBeam = mounted && Math.random() < 0.7;
+      const text = isTextBeam
+        ? RANDOM_SENTENCES[Math.floor(Math.random() * RANDOM_SENTENCES.length)]
+        : undefined;
+
+      beams.push({ x, delay, isTextBeam, text });
     }
     return beams;
-  }, [beamsPerSide, beamSize, beamDelayMax, beamDelayMin]);
+  }, [beamsPerSide, beamSize, beamDelayMax, beamDelayMin, mounted]);
 
   const topBeams = useMemo(() => generateBeams(), [generateBeams]);
   const rightBeams = useMemo(() => generateBeams(), [generateBeams]);
@@ -82,7 +140,7 @@ export const WarpBackground: React.FC<WarpBackgroundProps> = ({
   const leftBeams = useMemo(() => generateBeams(), [generateBeams]);
 
   return (
-    <div className={cn("relative rounded border p-20", className)} {...props}>
+    <div className={cn("relative rounded p-20", className)} {...props}>
       <div
         style={
           {
