@@ -1,0 +1,32 @@
+---
+import { Image } from 'astro:assets';
+
+import githubImg from '../../public/github.png';
+import codechefImg from '../../public/codechef.png';
+import leetcodeImg from '../../public/leetcode.png';
+import linkedinImg from '../../public/linkedin.png';
+
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<div class={`flex gap-2 m-2 py-2 h-fit ${className}`}>
+  <a class="cursor-pointer" href="https://github.com/vineetprash" target="_blank" rel="noopener noreferrer">
+    <Image src={githubImg} alt="github" width={60} height={60} loading="eager" />
+  </a>
+  <a class="cursor-pointer" href="https://www.codechef.com/users/vineetp1" target="_blank" rel="noopener noreferrer">
+    <Image src={codechefImg} alt="codechef" width={60} height={60} loading="eager" />
+  </a>
+  <a class="cursor-pointer" href="https://leetcode.com/u/vineetp_1/" target="_blank" rel="noopener noreferrer">
+    <Image src={leetcodeImg} alt="leetcode" width={60} height={60} loading="eager" />
+  </a>
+  <a class="cursor-pointer my-auto" href="https://cssbattle.dev/player/rWBLFYkftUatF58QvdZUii5qLeg2" target="_blank" rel="noopener noreferrer">
+    <!-- SVG kept as img: astro:assets doesn't optimize SVGs -->
+    <img src="/cssbattle.svg" alt="cssbattle" width="60" height="60" loading="eager" />
+  </a>
+  <a class="cursor-pointer" href="https://www.linkedin.com/in/vineet-prashant-994816257/" target="_blank" rel="noopener noreferrer">
+    <Image src={linkedinImg} alt="linkedin" width={60} height={60} loading="eager" />
+  </a>
+</div>

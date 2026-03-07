@@ -1,0 +1,187 @@
+---
+interface Props {
+  perspective?: number;
+  beamsPerSide?: number;
+  beamSize?: number;
+  beamDelayMax?: number;
+  beamDelayMin?: number;
+  beamDuration?: number;
+  gridColor?: string;
+  class?: string;
+}
+
+const {
+  perspective = 100,
+  beamsPerSide = 3,
+  beamSize = 1,
+  beamDelayMax = 5,
+  beamDelayMin = 0,
+  beamDuration = 3,
+  gridColor = 'transparent',
+  class: className = '',
+} = Astro.props;
+
+// All randomness runs at build time — no JS shipped to client
+function generateBeams() {
+  const step = Math.floor(100 / beamSize) / beamsPerSide;
+  return Array.from({ length: beamsPerSide }, (_, i) => ({
+    x:     Math.floor(i * step) * beamSize,
+    delay: Math.random() * (beamDelayMax - beamDelayMin) + beamDelayMin,
+    ar:    Math.floor(Math.random() * 10) + 1,
+  }));
+}
+
+const sides = {
+  top:    generateBeams(),
+  bottom: generateBeams(),
+  left:   generateBeams(),
+  right:  generateBeams(),
+};
+---
+
+<div
+  class={`warp-root ${className}`}
+  style={`--perspective:${perspective}px; --grid-color:${gridColor}; --beam-size:${beamSize}%; --duration:${beamDuration}s;`}
+>
+  <div class="warp-scene">
+
+    <!-- top -->
+    <div class="warp-side side-top">
+      {sides.top.map(b => (
+        <div
+          class="beam"
+          style={`--x:${b.x * beamSize}%; --width:${beamSize}%; --ar:${b.ar}; --delay:${b.delay.toFixed(3)}s;`}
+        />
+      ))}
+    </div>
+
+    <!-- bottom -->
+    <div class="warp-side side-bottom">
+      {sides.bottom.map(b => (
+        <div
+          class="beam"
+          style={`--x:${b.x * beamSize}%; --width:${beamSize}%; --ar:${b.ar}; --delay:${b.delay.toFixed(3)}s;`}
+        />
+      ))}
+    </div>
+
+    <!-- left -->
+    <div class="warp-side side-left">
+      {sides.left.map(b => (
+        <div
+          class="beam"
+          style={`--x:${b.x * beamSize}%; --width:${beamSize}%; --ar:${b.ar}; --delay:${b.delay.toFixed(3)}s;`}
+        />
+      ))}
+    </div>
+
+    <!-- right -->
+    <div class="warp-side side-right">
+      {sides.right.map(b => (
+        <div
+          class="beam"
+          style={`--x:${b.x * beamSize}%; --width:${beamSize}%; --ar:${b.ar}; --delay:${b.delay.toFixed(3)}s;`}
+        />
+      ))}
+    </div>
+
+  </div>
+
+  <div class="warp-content">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .warp-root {
+    position: relative;
+    border-radius: 0.25rem;
+  }
+
+  .warp-scene {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    clip-path: inset(0);
+    container-type: size;
+    perspective: var(--perspective);
+    transform-style: preserve-3d;
+  }
+
+  /* ── shared side styles ── */
+  .warp-side {
+    position: absolute;
+    transform-style: preserve-3d;
+    container-type: inline-size;
+    height: 100cqmax;
+    background-size: var(--beam-size) var(--beam-size);
+    background-image:
+      linear-gradient(var(--grid-color) 0 1px, transparent 1px var(--beam-size)),
+      linear-gradient(90deg, var(--grid-color) 0 1px, transparent 1px var(--beam-size));
+    background-position: 50% -0.5px, 50% 50%;
+  }
+
+  .side-top {
+    top: 0;
+    width: 100cqi;
+    transform-origin: 50% 0%;
+    transform: rotateX(-90deg);
+  }
+
+  .side-bottom {
+    top: 100%;
+    width: 100cqi;
+    transform-origin: 50% 0%;
+    transform: rotateX(-90deg);
+  }
+
+  .side-left {
+    left: 0;
+    top: 0;
+    width: 100cqh;
+    transform-origin: 0% 0%;
+    transform: rotate(90deg) rotateX(-90deg);
+  }
+
+  .side-right {
+    right: 0;
+    top: 0;
+    width: 100cqh;
+    transform-origin: 100% 0%;
+    transform: rotate(-90deg) rotateX(-90deg);
+  }
+
+  /* ── beam ── */
+  .beam {
+    position: absolute;
+    left: var(--x);
+    top: 0;
+    width: var(--width);
+    aspect-ratio: 1 / var(--ar);
+    border-radius: 50%;
+    /* shooting star: bright head at bottom (leading edge), fading tail above */
+    background: linear-gradient(
+      to bottom,
+      rgba(179, 179, 179, 0.92) 0%,
+      rgba(113, 157, 222, 0.55) 6%,
+      rgba(42, 101, 240, 0.25) 15%,
+      transparent 100%
+    );
+    filter: blur(0.5px);
+    /* circInOut cubic-bezier */
+    animation: beam-travel var(--duration) var(--delay) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+    /* backwards: hold 'from' state during delay — prevents the startup glitch */
+    animation-fill-mode: backwards;
+    will-change: transform;
+  }
+
+  @keyframes beam-travel {
+    from { transform: translateY(100cqmax) translateX(-50%); }
+    to   { transform: translateY(-100%)    translateX(-50%); }
+  }
+
+  .warp-content {
+    position: relative;
+  }
+</style>

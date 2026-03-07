@@ -1,0 +1,29 @@
+---
+interface Props {
+  count: number;
+  reverse?: boolean;
+}
+
+const { count, reverse = false } = Astro.props;
+
+const MIN_HEIGHT = 5;
+const multiplier = 1;
+
+const bands = Array.from({ length: count }, (_, index) => {
+  const height = (reverse ? count - index : index) * 5 + MIN_HEIGHT;
+  const normalizedSize = (height * multiplier - MIN_HEIGHT) / ((count - 1) * 5);
+  const r = Math.round(0 + 15 * normalizedSize);
+  const g = Math.round(0 + 13 * normalizedSize);
+  const b = Math.round(0 + 11 * normalizedSize);
+  return { height, color: `rgb(${r}, ${g}, ${b})` };
+});
+---
+
+<div class="grid gap-2">
+  {bands.map(({ height, color }) => (
+    <div
+      class="w-full"
+      style={`height:${height}px; background:${color};`}
+    />
+  ))}
+</div>

@@ -1,0 +1,125 @@
+---
+// Pure CSS aurora — GPU-composited transforms + border-radius morphing
+---
+
+<div class="aurora" aria-hidden="true">
+  <div class="band band-1"></div>
+  <div class="band band-2"></div>
+  <div class="band band-3"></div>
+  <div class="band band-4"></div>
+</div>
+
+<style>
+  .aurora {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 120vh;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .band {
+    position: absolute;
+    left: -20%;
+    width: 140%;
+    will-change: transform, border-radius, opacity;
+    mix-blend-mode: screen;
+    filter: blur(15px);
+  }
+
+  /* — Band 1: bright teal-green core — */
+  .band-1 {
+    top: -8%;
+    height: 30vh;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(60, 220, 180, 0.55) 5%,
+      rgba(30, 180, 140, 0.45) 5%,
+      transparent 100%
+    );
+    opacity: 0.85;
+    animation: morph1 12s ease-in-out infinite;
+  }
+
+  /* — Band 2: violet-blue upper shimmer — */
+  .band-2 {
+    top: -15%;
+    height: 55vh;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(120, 80, 255, 0.4) 30%,
+      rgba(80, 40, 220, 0.3) 6%,
+      transparent 100%
+    );
+    opacity: 0.7;
+    animation: morph2 17s ease-in-out infinite;
+  }
+
+  /* — Band 3: emerald-green lower wave — */
+  .band-3 {
+    top: 5%;
+    height: 40vh;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(50, 255, 160, 0.35) 4%,
+      rgba(20, 200, 120, 0.25) 7%,
+      transparent 100%
+    );
+    opacity: 0.75;
+    animation: morph3 21s ease-in-out infinite;
+  }
+
+  /* — Band 4: deep cyan accent — */
+  .band-4 {
+    top: -5%;
+    height: 40vh;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(0, 200, 240, 0.3) 4%,
+      rgba(0, 160, 200, 0.2) 7%,
+      transparent 100%
+    );
+    opacity: 0.6;
+    animation: morph4 25s ease-in-out infinite;
+  }
+
+  /* — Keyframes: morphing border-radius + vertical wave + scale — */
+  @keyframes morph1 {
+    0%   { transform: translateY(0)    scaleY(1)    skewX(0deg);   border-radius: 40% 60% 55% 45% / 30% 40% 60% 70%; }
+    20%  { transform: translateY(3vh)  scaleY(1.1)  skewX(-3deg);  border-radius: 60% 40% 45% 55% / 50% 30% 70% 40%; }
+    40%  { transform: translateY(6vh)  scaleY(0.88) skewX(4deg);   border-radius: 30% 70% 60% 40% / 60% 50% 40% 60%; }
+    60%  { transform: translateY(2vh)  scaleY(1.15) skewX(-2deg);  border-radius: 55% 45% 5% 5% / 40% 60% 55% 45%; }
+    80%  { transform: translateY(7vh)  scaleY(0.95) skewX(5deg);   border-radius: 45% 55% 5% 5% / 55% 45% 40% 60%; }
+    100% { transform: translateY(0)    scaleY(1)    skewX(0deg);   border-radius: 40% 60% 55% 45% / 30% 40% 60% 70%; }
+  }
+
+  @keyframes morph2 {
+    0%   { transform: translateY(0)    scaleY(1)    skewX(2deg);   border-radius: 55% 45% 40% 60% / 45% 55% 5% 5%; }
+    25%  { transform: translateY(-4vh) scaleY(1.12) skewX(-5deg);  border-radius: 5% 5% 55% 45% / 60% 40% 55% 45%; }
+    50%  { transform: translateY(5vh)  scaleY(0.9)  skewX(3deg);   border-radius: 5% 5% 45% 55% / 5% 5% 45% 55%; }
+    75%  { transform: translateY(2vh)  scaleY(1.08) skewX(-4deg);  border-radius: 45% 55% 60% 40% / 55% 45% 60% 40%; }
+    100% { transform: translateY(0)    scaleY(1)    skewX(2deg);   border-radius: 55% 45% 40% 60% / 45% 55% 5% 5%; }
+  }
+
+  @keyframes morph3 {
+    0%   { transform: translateY(0)    scaleY(1)    skewX(-3deg);  border-radius: 50% 50% 45% 55% / 55% 45% 50% 50%; }
+    30%  { transform: translateY(8vh)  scaleY(1.2)  skewX(6deg);   border-radius: 70% 30% 55% 45% / 40% 60% 45% 55%; }
+    55%  { transform: translateY(3vh)  scaleY(0.85) skewX(-2deg);  border-radius: 40% 60% 5% 5% / 60% 40% 55% 45%; }
+    80%  { transform: translateY(9vh)  scaleY(1.05) skewX(4deg);   border-radius: 60% 40% 5% 5% / 45% 55% 40% 60%; }
+    100% { transform: translateY(0)    scaleY(1)    skewX(-3deg);  border-radius: 50% 50% 45% 55% / 55% 45% 50% 50%; }
+  }
+
+  @keyframes morph4 {
+    0%   { transform: translateY(0)    scaleY(1)    skewX(1deg);   border-radius: 45% 55% 50% 50% / 50% 50% 45% 55%; }
+    5%  { transform: translateY(-3vh) scaleY(1.18) skewX(-6deg);  border-radius: 60% 40% 40% 60% / 5% 5% 55% 45%; }
+    5%  { transform: translateY(6vh)  scaleY(0.92) skewX(3deg);   border-radius: 5% 5% 60% 40% / 55% 45% 40% 60%; }
+    100% { transform: translateY(0)    scaleY(1)    skewX(1deg);   border-radius: 45% 55% 50% 50% / 50% 50% 45% 55%; }
+  }
+</style>

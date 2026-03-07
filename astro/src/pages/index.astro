@@ -1,0 +1,77 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Bands from '../components/Bands.astro';
+import Hyperlinks from '../components/Hyperlinks.astro';
+import ProjectBentoGrid from '../components/ProjectBentoGrid.astro';
+import WarpBackground from '../components/WarpBackground.astro';
+import Aurora from '../components/Aurora.astro';
+
+---
+
+<Layout title="Portfolio" description="Vineet Prashant">
+  <div class="bg-black min-h-screen w-full relative overflow-x-hidden">
+    <!-- Navbar -->
+    <Navbar />
+
+    <!-- Hero Section -->
+    <section class="relative h-svh overflow-hidden flex flex-col justify-end" id="about">
+      <!-- Aurora blobs (pure CSS, GPU-composited) -->
+      <Aurora />
+
+      <!-- WarpBackground (pure Astro, zero JS) -->
+      <div class="absolute inset-0 z-0">
+        <WarpBackground class="w-full h-full" />
+      </div>
+
+      <!-- Foreground content aligned to bottom -->
+      <div class="relative z-10 pb-10 sm:pb-28 px-12 h-full">
+        <div class="flex max-w-5xl mx-auto flex-col h-full sm:flex-row justify-end sm:justify-between items-start sm:items-end gap-8 sm:gap-6 text-white">
+          <!-- Name / Intro -->
+          <div class="space-y-4 max-w-2xl w-full sm:w-full mt-auto pt-20 sm:pt-0 sm:mt-44">
+            <h2 class="text-3xl sm:text-5xl font-bold">hello</h2>
+            <div class="text-2xl sm:text-4xl font-semibold">
+              I&apos;m <span class="text-stone-400">Vineet Prashant</span>
+            </div>
+          </div>
+
+          <!-- Description + Links -->
+          <div class="flex flex-col sm:items-center sm:justify-between sm:mt-44 w-full sm:w-auto">
+            <div class="text-base sm:text-sm font-medium text-left sm:text-justify w-full sm:w-72 mb-6 sm:mb-0">
+              <span class="text-stone-400">
+                Engineer focused on intelligent systems, developer tooling, scalable & secure architecture, and occasional game development.
+              </span>
+            </div>
+            <div class="w-full sm:w-auto">
+              <Hyperlinks />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bands (transition down) -->
+    <Bands count={10} />
+
+    <!-- Projects Bento Grid -->
+    <section class="relative z-10 overflow-hidden" id="projects">
+
+      <div class="relative z-10">
+        <ProjectBentoGrid />
+      </div>
+    </section>
+
+    <!-- Reverse Bands (transition up) -->
+    <Bands count={10} reverse={true} />
+
+    <!-- Footer -->
+    <footer class="w-full py-8 flex items-center justify-center bg-black">
+      <span
+        class="text-[0.75rem] tracking-[0.4em] uppercase text-stone-800 select-none hover:text-stone-600 transition-colors duration-700 cursor-default"
+        title="a friendly reminder"
+      >
+        keep it simple stupid
+      </span>
+    </footer>
+  </div>
+</Layout>
