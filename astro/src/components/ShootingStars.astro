@@ -1,0 +1,111 @@
+---
+interface Props {
+  minSpeed?: number;
+  maxSpeed?: number;
+  minDelay?: number;
+  maxDelay?: number;
+  starColor?: string;
+  trailColor?: string;
+  starWidth?: number;
+  starHeight?: number;
+  class?: string;
+}
+
+const {
+  minSpeed = 10,
+  maxSpeed = 30,
+  minDelay = 1200,
+  maxDelay = 4200,
+  starColor = '#9E00FF',
+  trailColor = '#2EB9DF',
+  starWidth = 10,
+  starHeight = 1,
+  class: className = '',
+} = Astro.props;
+---
+
+<canvas data-shooting-stars class={className}></canvas>
+
+<script define:vars={{ minSpeed, maxSpeed, minDelay, maxDelay, starColor, trailColor, starWidth, starHeight }}>
+  const canvas = document.querySelector('[data-shooting-stars]');
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  let star = null;
+
+  function getRandomStartPoint() {
+    const side = Math.floor(Math.random() * 4);
+    const offset = Math.random() * window.innerWidth;
+    switch (side) {
+      case 0: return { x: offset, y: 0, angle: 45 };
+      case 1: return { x: window.innerWidth, y: offset, angle: 135 };
+      case 2: return { x: offset, y: window.innerHeight, angle: 225 };
+      case 3: return { x: 0, y: offset, angle: 315 };
+      default: return { x: 0, y: 0, angle: 45 };
+    }
+  }
+
+  function scheduleStar() {
+    const delay = Math.random() * (maxDelay - minDelay) + minDelay;
+    setTimeout(() => {
+      const { x, y, angle } = getRandomStartPoint();
+      star = { x, y, angle, scale: 1, speed: Math.random() * (maxSpeed - minSpeed) + minSpeed, distance: 0 };
+      scheduleStar();
+    }, delay);
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (star) {
+      const angleRad = (star.angle * Math.PI) / 180;
+      const w = starWidth * star.scale;
+      const h = starHeight;
+
+      ctx.save();
+      ctx.translate(star.x + w / 2, star.y + h / 2);
+      ctx.rotate(angleRad);
+
+      const grad = ctx.createLinearGradient(-w / 2, 0, w / 2, 0);
+      grad.addColorStop(0, 'transparent');
+      grad.addColorStop(1, starColor);
+      ctx.fillStyle = grad;
+      ctx.fillRect(-w / 2, -h / 2, w, h);
+      ctx.restore();
+
+      const newX = star.x + star.speed * Math.cos(angleRad);
+      const newY = star.y + star.speed * Math.sin(angleRad);
+      const newDist = star.distance + star.speed;
+
+      if (newX < -20 || newX > window.innerWidth + 20 || newY < -20 || newY > window.innerHeight + 20) {
+        star = null;
+      } else {
+        star = { ...star, x: newX, y: newY, distance: newDist, scale: 1 + newDist / 100 };
+      }
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  // spawn first star immediately then keep scheduling
+  const { x, y, angle } = getRandomStartPoint();
+  star = { x, y, angle, scale: 1, speed: Math.random() * (maxSpeed - minSpeed) + minSpeed, distance: 0 };
+  scheduleStar();
+  tick();
+</script>
+
+<style>
+  [data-shooting-stars] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+</style>

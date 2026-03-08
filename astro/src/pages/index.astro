@@ -20,9 +20,9 @@ import Aurora from '../components/Aurora.astro';
       <Aurora />
 
       <!-- WarpBackground (pure Astro, zero JS) -->
-      <div class="absolute inset-0 z-0">
-        <WarpBackground class="w-full h-full" />
-      </div>
+      <!--<div class="absolute inset-0 z-0">-->
+      <!--  <WarpBackground class="w-full h-full" />-->
+      <!--</div>-->
 
       <!-- Foreground content aligned to bottom -->
       <div class="relative z-10 pb-10 sm:pb-28 px-12 h-full">
@@ -54,11 +54,8 @@ import Aurora from '../components/Aurora.astro';
     <Bands count={10} />
 
     <!-- Projects Bento Grid -->
-    <section class="relative z-10 overflow-hidden" id="projects">
-
-      <div class="relative z-10">
-        <ProjectBentoGrid />
-      </div>
+    <section class="relative z-10" id="projects">
+      <ProjectBentoGrid />
     </section>
 
     <!-- Reverse Bands (transition up) -->

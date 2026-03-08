@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-
+import AuroraGolden from './AuroraGolden.astro';
 const projects = [
   {
     title: "Firefly",
@@ -54,11 +54,11 @@ const projects = [
 ];
 ---
 
-<section class="w-full py-16 bg-[rgb(15,13,11)] min-h-screen px-4" id="projects">
+<section class="relative w-full py-16 bg-[rgb(15,13,11)] min-h-screen px-4" id="projects">
   <h2 class="text-center text-4xl font-semibold tracking-tight text-neutral-100 mb-12">
     Projects showcase
   </h2>
-
+  <AuroraGolden />
   <!-- BentoGrid -->
   <div class="mx-auto grid max-w-7xl grid-cols-1 gap-4 sm:auto-rows-[18rem] sm:grid-cols-3">
     {projects.map((proj, i) => {

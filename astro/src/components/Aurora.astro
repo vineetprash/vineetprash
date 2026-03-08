@@ -7,6 +7,7 @@
   <div class="band band-2"></div>
   <div class="band band-3"></div>
   <div class="band band-4"></div>
+  <div class="band band-5"></div>
 </div>
 
 <style>
@@ -15,7 +16,7 @@
     top: 0;
     left: 0;
     right: 0;
-    height: 120vh;
+    height: 150vh;
     overflow: hidden;
     pointer-events: none;
     z-index: 0;
@@ -27,7 +28,7 @@
     width: 140%;
     will-change: transform, border-radius, opacity;
     mix-blend-mode: screen;
-    filter: blur(15px);
+    filter: blur(30px);
   }
 
   /* — Band 1: bright teal-green core — */
@@ -75,6 +76,21 @@
     animation: morph3 21s ease-in-out infinite;
   }
 
+  /* — Band 5: magenta-purple fringe — */
+  .band-5 {
+    top: 10%;
+    height: 35vh;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(60, 209, 220, 0.3) 4%,
+      rgba(40, 165, 200, 0.26) 7%,
+      transparent 100%
+    );
+    opacity: 0.6;
+    animation: morph5 19s ease-in-out infinite;
+  }
+
   /* — Band 4: deep cyan accent — */
   .band-4 {
     top: -5%;
@@ -82,8 +98,8 @@
     background: linear-gradient(
       180deg,
       transparent 0%,
-      rgba(0, 200, 240, 0.3) 4%,
-      rgba(0, 160, 200, 0.2) 7%,
+      rgba(0, 200, 240, 0.41) 4%,
+      rgba(11, 180, 222, 0.39) 7%,
       transparent 100%
     );
     opacity: 0.6;
@@ -92,34 +108,42 @@
 
   /* — Keyframes: morphing border-radius + vertical wave + scale — */
   @keyframes morph1 {
-    0%   { transform: translateY(0)    scaleY(1)    skewX(0deg);   border-radius: 40% 60% 55% 45% / 30% 40% 60% 70%; }
-    20%  { transform: translateY(3vh)  scaleY(1.1)  skewX(-3deg);  border-radius: 60% 40% 45% 55% / 50% 30% 70% 40%; }
-    40%  { transform: translateY(6vh)  scaleY(0.88) skewX(4deg);   border-radius: 30% 70% 60% 40% / 60% 50% 40% 60%; }
-    60%  { transform: translateY(2vh)  scaleY(1.15) skewX(-2deg);  border-radius: 55% 45% 5% 5% / 40% 60% 55% 45%; }
-    80%  { transform: translateY(7vh)  scaleY(0.95) skewX(5deg);   border-radius: 45% 55% 5% 5% / 55% 45% 40% 60%; }
-    100% { transform: translateY(0)    scaleY(1)    skewX(0deg);   border-radius: 40% 60% 55% 45% / 30% 40% 60% 70%; }
+    0%   { transform: translateY(0)    translateX(0)    scaleY(1)    skewX(0deg);   border-radius: 40% 60% 55% 45% / 30% 40% 60% 70%; }
+    20%  { transform: translateY(3vh)  translateX(6vw)  scaleY(1.1)  skewX(-3deg);  border-radius: 60% 40% 45% 55% / 50% 30% 70% 40%; }
+    40%  { transform: translateY(6vh)  translateX(-3vw) scaleY(0.88) skewX(4deg);   border-radius: 30% 70% 60% 40% / 60% 50% 40% 60%; }
+    60%  { transform: translateY(2vh)  translateX(8vw)  scaleY(1.15) skewX(-2deg);  border-radius: 55% 45% 5% 5% / 40% 60% 55% 45%; }
+    80%  { transform: translateY(7vh)  translateX(-5vw) scaleY(0.95) skewX(5deg);   border-radius: 45% 55% 5% 5% / 55% 45% 40% 60%; }
+    100% { transform: translateY(0)    translateX(0)    scaleY(1)    skewX(0deg);   border-radius: 40% 60% 55% 45% / 30% 40% 60% 70%; }
   }
 
   @keyframes morph2 {
-    0%   { transform: translateY(0)    scaleY(1)    skewX(2deg);   border-radius: 55% 45% 40% 60% / 45% 55% 5% 5%; }
-    25%  { transform: translateY(-4vh) scaleY(1.12) skewX(-5deg);  border-radius: 5% 5% 55% 45% / 60% 40% 55% 45%; }
-    50%  { transform: translateY(5vh)  scaleY(0.9)  skewX(3deg);   border-radius: 5% 5% 45% 55% / 5% 5% 45% 55%; }
-    75%  { transform: translateY(2vh)  scaleY(1.08) skewX(-4deg);  border-radius: 45% 55% 60% 40% / 55% 45% 60% 40%; }
-    100% { transform: translateY(0)    scaleY(1)    skewX(2deg);   border-radius: 55% 45% 40% 60% / 45% 55% 5% 5%; }
+    0%   { transform: translateY(0)    translateX(0)    scaleY(1)    skewX(2deg);   border-radius: 55% 45% 40% 60% / 45% 55% 5% 5%; }
+    25%  { transform: translateY(-4vh) translateX(-6vw) scaleY(1.12) skewX(-5deg);  border-radius: 5% 5% 55% 45% / 60% 40% 55% 45%; }
+    50%  { transform: translateY(5vh)  translateX(5vw)  scaleY(0.9)  skewX(3deg);   border-radius: 5% 5% 45% 55% / 5% 5% 45% 55%; }
+    75%  { transform: translateY(2vh)  translateX(-5vw) scaleY(1.08) skewX(-4deg);  border-radius: 45% 55% 60% 40% / 55% 45% 60% 40%; }
+    100% { transform: translateY(0)    translateX(0)    scaleY(1)    skewX(2deg);   border-radius: 55% 45% 40% 60% / 45% 55% 5% 5%; }
   }
 
   @keyframes morph3 {
-    0%   { transform: translateY(0)    scaleY(1)    skewX(-3deg);  border-radius: 50% 50% 45% 55% / 55% 45% 50% 50%; }
-    30%  { transform: translateY(8vh)  scaleY(1.2)  skewX(6deg);   border-radius: 70% 30% 55% 45% / 40% 60% 45% 55%; }
-    55%  { transform: translateY(3vh)  scaleY(0.85) skewX(-2deg);  border-radius: 40% 60% 5% 5% / 60% 40% 55% 45%; }
-    80%  { transform: translateY(9vh)  scaleY(1.05) skewX(4deg);   border-radius: 60% 40% 5% 5% / 45% 55% 40% 60%; }
-    100% { transform: translateY(0)    scaleY(1)    skewX(-3deg);  border-radius: 50% 50% 45% 55% / 55% 45% 50% 50%; }
+    0%   { transform: translateY(0)    translateX(0)    scaleY(1)    skewX(-3deg);  border-radius: 50% 50% 45% 55% / 55% 45% 50% 50%; }
+    30%  { transform: translateY(8vh)  translateX(7vw)  scaleY(1.2)  skewX(6deg);   border-radius: 70% 30% 55% 45% / 40% 60% 45% 55%; }
+    55%  { transform: translateY(3vh)  translateX(-5vw) scaleY(0.85) skewX(-2deg);  border-radius: 40% 60% 5% 5% / 60% 40% 55% 45%; }
+    80%  { transform: translateY(9vh)  translateX(12vw)  scaleY(1.05) skewX(4deg);   border-radius: 60% 40% 5% 5% / 45% 55% 40% 60%; }
+    100% { transform: translateY(0)    translateX(0)    scaleY(1)    skewX(-3deg);  border-radius: 50% 50% 45% 55% / 55% 45% 50% 50%; }
   }
 
   @keyframes morph4 {
-    0%   { transform: translateY(0)    scaleY(1)    skewX(1deg);   border-radius: 45% 55% 50% 50% / 50% 50% 45% 55%; }
-    5%  { transform: translateY(-3vh) scaleY(1.18) skewX(-6deg);  border-radius: 60% 40% 40% 60% / 5% 5% 55% 45%; }
-    5%  { transform: translateY(6vh)  scaleY(0.92) skewX(3deg);   border-radius: 5% 5% 60% 40% / 55% 45% 40% 60%; }
-    100% { transform: translateY(0)    scaleY(1)    skewX(1deg);   border-radius: 45% 55% 50% 50% / 50% 50% 45% 55%; }
+    0%   { transform: translateY(0)    translateX(0)    scaleY(1)    skewX(1deg);   border-radius: 45% 55% 50% 50% / 50% 50% 45% 55%; }
+    35%  { transform: translateY(-3vh) translateX(-7vw) scaleY(1.18) skewX(-6deg);  border-radius: 60% 40% 40% 60% / 5% 5% 55% 45%; }
+    65%  { transform: translateY(6vh)  translateX(6vw)  scaleY(0.92) skewX(3deg);   border-radius: 5% 5% 60% 40% / 55% 45% 40% 60%; }
+    100% { transform: translateY(0)    translateX(0)    scaleY(1)    skewX(1deg);   border-radius: 45% 55% 50% 50% / 50% 50% 45% 55%; }
+  }
+
+  @keyframes morph5 {
+    0%   { transform: translateY(0)    translateX(0)    scaleY(1)    skewX(-2deg);  border-radius: 55% 45% 50% 50% / 45% 55% 50% 50%; }
+    20%  { transform: translateY(-5vh) translateX(5vw)  scaleY(1.14) skewX(4deg);   border-radius: 40% 60% 60% 40% / 60% 40% 45% 55%; }
+    45%  { transform: translateY(4vh)  translateX(-6vw) scaleY(0.88) skewX(-3deg);  border-radius: 60% 40% 45% 55% / 50% 50% 60% 40%; }
+    70%  { transform: translateY(7vh)  translateX(3vw)  scaleY(1.1)  skewX(5deg);   border-radius: 45% 55% 55% 45% / 40% 60% 50% 50%; }
+    100% { transform: translateY(0)    translateX(0)    scaleY(1)    skewX(-2deg);  border-radius: 55% 45% 50% 50% / 45% 55% 50% 50%; }
   }
 </style>
